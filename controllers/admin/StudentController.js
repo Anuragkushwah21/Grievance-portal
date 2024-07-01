@@ -2,6 +2,7 @@ const StudentModel = require("../../models/student");
 const cloudinary = require("cloudinary").v2;
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const CourseModel = require("../../models/course");
 
 cloudinary.config({
   cloud_name: "dfoy70dri",
@@ -31,12 +32,14 @@ class StudentController {
   static display = async (req, res) => {
     try {
       const { name, image } = req.Admindata;
+      const course=await CourseModel.find()
       const data = await StudentModel.find().sort({ _id: -1 });
       // console.log(data)
       res.render("admin/student/display", {
         d: data,
         name: name,
         image: image,
+        course:course,
         msg: req.flash("success"),
         error: req.flash("error"),
       });

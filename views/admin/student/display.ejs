@@ -114,8 +114,16 @@
             <input type="password" name="password" class="form-control" required />
             <label for="">Confirm password</label>
             <input type="password" name="confirmpassword" class="form-control" required />
+            <!-- <label for="">Course</label>
+            <input type="course" name="course" class="form-control" required/> -->
             <label for="">Course</label>
-            <input type="course" name="course" class="form-control" required/>
+            <select type="course" name="course" class="form-control" required>
+              <option value="">Select Course</option>
+              <% course.forEach((course)=>{%>
+                <option value="<%= course.course%>"><%= course.name%></option>
+             <% })%>
+            </select>
+
             <!-- <label for="course">Course:</label>
             <br>
             <select id="course" name="course" required>
@@ -134,7 +142,7 @@
             <br> -->
             <label for="semester">Semester</label>
             <br>
-            <select id="semester" name="semester" required>
+            <select id="semester" class="form-control" name="semester" required>
                 <option value="" disabled selected>Select Semester</option>
                 <option value="1st Year">1st Year</option>
                 <option value="2nd Year">2nd Year</option>

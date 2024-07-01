@@ -5,6 +5,7 @@ const StudentController = require("../controllers/admin/StudentController");
 const CourseController = require("../controllers/admin/CourseController");
 const checkUserAuth = require("../middleware/auth");
 const checkAdminAuth = require("../middleware/adminAuth");
+const checkCompAuth = require("../middleware/comlaint");
 const ComplaintController = require("../controllers/admin/ComplaintController");
 
 
@@ -45,9 +46,10 @@ route.post("/verifylogin", StudentController.verifylogin);
 route.get("/logout", StudentController.studentlogout);
 
 //complaint Controller
-route.post("/complaintInsert", ComplaintController.complaintInsert);
+route.post("/complaintInsert",checkCompAuth, ComplaintController.complaintInsert);
 route.get("/complaint/complaintdashboard",checkAdminAuth, ComplaintController.complaintDashboard);
 route.get("/complaint/view/:id",checkAdminAuth, ComplaintController.viewComplaint);
+route.get("/admin/student/comp_Status",checkUserAuth, checkCompAuth, ComplaintController.comp_Status);
 
 //admin view
 route.get("/admin/student/view", StudentController.viewstudent);

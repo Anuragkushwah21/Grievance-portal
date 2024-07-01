@@ -19,7 +19,6 @@ class ComplaintController {
           folder: "ComplaintImage",
         }
       );
-
       const { comptitle, semester, course, rollnumber, complaint } = req.body;
       const Complaint = new ComplaintModel({
         comptitle: comptitle,
@@ -49,6 +48,7 @@ class ComplaintController {
         d: data,
         image: image,
         name: name,
+        msg: req.flash("success"),
       });
     } catch (error) {
       console.log(error);
@@ -61,6 +61,25 @@ class ComplaintController {
       const data = await ComplaintModel.findById(req.params.id);
       // console.log(data)
       res.render("complaint/view", { d: data, name: name, image: image });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  static comp_Status = async (req, res) => {
+    try {
+      const { semester, course, rollnumber } = req.Userdata;
+      const data = await ComplaintModel.find();
+      const comp = await ComplaintModel.find();
+      // console.log(data)
+      res.render("admin/student/comp_Status", {
+        c: comp,
+        d: data,
+        semester: semester,
+        course: course,
+        rollnumber: rollnumber,
+        msg: req.flash("success"),
+      });
+      req.flash("success", "Complaint Register Successfuly");
     } catch (error) {
       console.log(error);
     }

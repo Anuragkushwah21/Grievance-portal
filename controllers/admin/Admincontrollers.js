@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 const AdminModel = require("../../models/Admin");
 const ComplaintModel = require("../../models/complaint");
-const nodemailer=require("nodemailer")
+// const nodemailer = require("nodemailer");
 const cloudinary = require("cloudinary").v2;
 const jwt = require("jsonwebtoken");
 
@@ -14,7 +14,11 @@ class Admincontrollers {
   static dashboard = async (req, res) => {
     try {
       const { name, image } = req.Admindata;
-      res.render("admin/dashboard", { name: name, image: image });
+      res.render("admin/dashboard", {
+        name: name,
+        image: image,
+        msg: req.flash("success"),
+      });
     } catch (error) {
       console.log(error);
     }
@@ -186,39 +190,18 @@ class Admincontrollers {
   };
   static update_status = async (req, res) => {
     try {
-      const { name, email, status, comment } = req.body;
-      console.log(req.params.id);
+      const { status, comment } = req.body;
+      // console.log(req.params.id);
+      // console.log(status, comment);
       await ComplaintModel.findByIdAndUpdate(req.params.id, {
         comment: comment,
         status: status,
       });
-      this.sendEmail(name, email, status, comment);
+      req.flash("success", "Status Update Succesfully");
       res.redirect("/complaint/complaintdashboard");
     } catch (error) {
       console.log(error);
     }
-  };
-  static sendEmail = async (name, email, status, comment) => {
-    console.log(name, email, status, comment);
-    // connenct with the smtp server
-
-    let transporter = await nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 587,
-
-      auth: {
-        user: "anuragkofficial21@gmail.com",
-        pass: "bjlgmcajfhsvpwwz",
-      },
-    });
-    let info = await transporter.sendMail({
-      from: "test@gmail.com", // sender address
-      to: email, // list of receivers
-      subject: ` Course ${status}`, // Subject line
-      text: "heelo", // plain text body
-      html: `<b>${name}</b> Course  <b>${status}</b> successful! <br>
-         <b>Comment from Admin</b> ${comment} `, // html body
-    });
   };
 }
 

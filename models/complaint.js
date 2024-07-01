@@ -28,7 +28,7 @@ const Complaintschema = new mongoose.Schema(
     },
     user_id: {
       type: String,
-      Required: "course",
+      Required: "complaint",
     },
     status: {
       type: String,

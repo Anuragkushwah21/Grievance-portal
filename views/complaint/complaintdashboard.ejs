@@ -7,6 +7,14 @@
         <div class="col-md-12">
           <h1 class="m-0 text-center m-3">View All Complaint</h1>
         </div>
+        <center>
+          <% if(msg.length > 0){ %>
+            <div class="alert alert-success">
+                <!-- To Print -->
+                <%= msg %>
+            </div>
+        <% } %>
+        </center>
         <!-- /.col -->
         <!-- /.col -->
       </div>
@@ -26,8 +34,8 @@
             <th>Semester </th>
             <th>Course</th>
             <th>Status </th>
+            <th>Message</th>
             <th>Admin Reply </th>
-            <!-- <th></th> -->
             <th>Action</th>
         </thead>
         <tfoot>
@@ -40,15 +48,14 @@
               <td><%=item.semester%></td>
               <td><%=item.course%></td>
               <td class="bg-secondary"><%=item.status%></td>
+              <td><%=item.comment%></td>
               <td>
                 <form action="/admin/update_status/<%= item._id%>" method="post">
                   <textarea name="comment" class="form-control"></textarea>
-                  <input type="hidden" name="name" value="<%=item.name%>">
-                  <input type="hidden" name="email" value="<%=item.email%>">
               </td>
               <td>
-                <button type="submit" name="status" class="btn btn-success" value="approved"><i class="fa-solid fa-check"></i></button>
-                <button type="submit" name="status" class="btn btn-danger" value="reject"><i class="fa-solid fa-xmark"></i></button>
+                <button type="submit" name="status" class="btn btn-success" value="Approved"><i class="fa-solid fa-check"></i></button>
+                <button type="submit" name="status" class="btn btn-danger" value="Reject"><i class="fa-solid fa-xmark"></i></button>
                 <a href="/complaint/view/<%=item._id%>" class="btn btn-info"><i class="fa-solid fa-eye"></i></a>
               </form>
               </td>

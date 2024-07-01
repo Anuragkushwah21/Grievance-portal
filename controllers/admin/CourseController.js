@@ -45,9 +45,9 @@ class CourseController {
     try {
       // console.log(req.params.id)
       const { name, image } = req.Admindata;
-      const data = await CourseModel.findById(req.params.id);
+      const data = await CourseModel.findByIdAndDelete(req.params.id);
       // console.log(data)
-      res.render("admin/course/edit", { d: data, name: name, image: image });
+      res.render("admin/course/courseDashboard", { d: data, name: name, image: image });
     } catch (error) {
       console.log(error);
     }
@@ -66,14 +66,6 @@ class CourseController {
       console.log(error);
     }
   };
-  // static deleteCourse = async (req, res) => {
-  //   try {
-  //     await CourseModel.findByIdAndDelete(req.params.id);
-  //     res.redirect("/admin/course/courseDashboard");
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
   static editCourse = async (req, res) => {
     try {
       // console.log(req.params.id)
